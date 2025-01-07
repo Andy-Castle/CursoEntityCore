@@ -7,7 +7,8 @@ namespace CursoEntityCore.Models
     {
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        [Key]
+        public int Categoria_Id { get; set; }
 
         [DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "[NULL]")]
         public string Nombre { get; set; }
