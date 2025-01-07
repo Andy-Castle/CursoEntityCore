@@ -23,5 +23,8 @@ namespace CursoEntityCore.Datos
         //3 - Modifique un valor de campo en la clase (modificiar campo en bd) 
 
         public DbSet<Usuario> Usuario { get; set; }
+
+        public DbSet<Articulo> Articulo { get; set; }
+
     }
 }
