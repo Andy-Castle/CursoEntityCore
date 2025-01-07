@@ -26,5 +26,8 @@ namespace CursoEntityCore.Datos
 
         public DbSet<Articulo> Articulo { get; set; }
 
+        public DbSet<DetalleUsuario> DetalleUsuario { get; set; }
+
+
     }
 }
