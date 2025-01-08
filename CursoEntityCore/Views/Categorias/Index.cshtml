@@ -4,6 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="row">
+    <div class="col-4">
+        <h3>Lista de categorías</h3>
+    </div>
+    <div class="col-3">
+        <a asp-action="Crear" class="btn-primary form-control">Crear Categoría</a>
+    </div>
+</div>
+
 <div>
     @if(Model.Count() > 0)
     {
@@ -30,3 +39,5 @@
         <p>No hay categorias</p>
     }
 </div>
+
+
