@@ -131,5 +131,23 @@ namespace CursoEntityCore.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult BorrarMultiple2()
+        {
+            IEnumerable<Categoria> categorias = _context.Categoria.OrderByDescending(categoria => categoria.Categoria_Id).Take(2);
+            _context.Categoria.RemoveRange(categorias);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult BorrarMultiple5()
+        {
+            IEnumerable<Categoria> categorias = _context.Categoria.OrderByDescending(categoria => categoria.Categoria_Id).Take(5);
+            _context.Categoria.RemoveRange(categorias);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
