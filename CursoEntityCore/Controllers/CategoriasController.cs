@@ -66,5 +66,33 @@ namespace CursoEntityCore.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+
+        public IActionResult VistaCrearMultipleOpcionFormulario()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CrearMultipleOpcionFormulario()
+        {
+            string categoriasForm = Request.Form["Nombre"];
+            var listaCategorias = from val in categoriasForm.Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries) select (val);
+
+            List<Categoria> categorias = new List<Categoria>();
+
+            foreach (var categoria in listaCategorias)
+            {
+                categorias.Add(new Categoria 
+                {
+                    Nombre = categoria
+                });
+            }
+
+            _context.Categoria.AddRange(categorias);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
