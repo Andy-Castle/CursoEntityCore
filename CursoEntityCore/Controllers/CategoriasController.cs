@@ -75,6 +75,7 @@ namespace CursoEntityCore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CrearMultipleOpcionFormulario()
         {
             string categoriasForm = Request.Form["Nombre"];
@@ -93,6 +94,33 @@ namespace CursoEntityCore.Controllers
             _context.Categoria.AddRange(categorias);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Editar (int? id)
+        {
+            if (id == null)
+            {
+                return View();
+            }
+
+            var categoria = _context.Categoria.FirstOrDefault(categoria => categoria.Categoria_Id == id);
+            return View(categoria);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar(Categoria categoria)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Categoria.Update(categoria);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(categoria);
         }
     }
 }
