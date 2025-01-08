@@ -41,13 +41,13 @@ namespace CursoEntityCore.Controllers
         [HttpGet]
         public IActionResult CrearMultipleOpcion2()
         {
-            //List<Categoria> categorias = new List<Categoria>();
+            List<Categoria> categorias = new List<Categoria>();
             for (int i = 0; i < 2; i++)
             {
-                //categorias.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
-                _context.Categoria.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
+                categorias.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
+                //_context.Categoria.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
             }
-            //_context.Categoria.AddRange(categorias);
+            _context.Categoria.AddRange(categorias);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
@@ -55,14 +55,14 @@ namespace CursoEntityCore.Controllers
         [HttpGet]
         public IActionResult CrearMultipleOpcion5()
         {
-            //List<Categoria> categorias = new List<Categoria>();
+            List<Categoria> categorias = new List<Categoria>();
             for (int i = 0; i < 5; i++)
             {
-                //categorias.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
-                _context.Categoria.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
+                categorias.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
+                //_context.Categoria.Add(new Categoria { Nombre = Guid.NewGuid().ToString() });
             }
 
-            //_context.Categoria.AddRange(categorias);
+            _context.Categoria.AddRange(categorias);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
