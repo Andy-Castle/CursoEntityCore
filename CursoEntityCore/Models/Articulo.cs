@@ -29,5 +29,8 @@ namespace CursoEntityCore.Models
         public int Categoria_Id { get; set; }
 
         public Categoria Categoria { get; set; }
+
+        //Para relacion muchos a muchos
+        public ICollection<ArticuloEtiqueta> articuloEtiqueta {  get; set; }
     }
 }
