@@ -13,5 +13,7 @@ namespace CursoEntityCore.Models
         [DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "[NULL]")]
         public string Nombre { get; set; }
 
+        public List<Articulo> Articulo { get; set; }
+
     }
 }
