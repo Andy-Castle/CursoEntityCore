@@ -14,6 +14,9 @@ namespace CursoEntityCore.Models
         [Required]
         public string Nombre { get; set; }
 
+        [DataType(DataType.Date)]
+        public DateTime FechaCreacion { get; set; }
+
         public List<Articulo> Articulo { get; set; }
 
     }
