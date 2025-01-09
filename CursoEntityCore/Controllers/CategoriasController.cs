@@ -30,9 +30,12 @@ namespace CursoEntityCore.Controllers
             //List<Categoria> listaCategorias = _context.Categoria.ToList();
 
             //Agrupando Registros
-            var listaCategorias = _context.Categoria
-                .GroupBy(categoria => new { categoria.Activo })
-                .Select(categoria => new { categoria.Key, Count = categoria.Count() }).ToList();
+            //var listaCategorias = _context.Categoria
+            //    .GroupBy(categoria => new { categoria.Activo })
+            //    .Select(categoria => new { categoria.Key, Count = categoria.Count() }).ToList();
+
+            //Paginanción Registros: take y skip
+            List<Categoria> listaCategorias = _context.Categoria.Skip(3).Take(2).ToList();
             return View(listaCategorias);
         }
 
