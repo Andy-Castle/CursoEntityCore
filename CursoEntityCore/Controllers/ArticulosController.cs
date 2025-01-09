@@ -19,8 +19,24 @@ namespace CursoEntityCore.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            
+            //Opcioón 1 sin datos relacionado (solo trae el ID de la categoría)
+
             //Carga Ansiosa, debemos especificar que se deben de cargar entidades relacionadas con .Include
             List<Articulo> listaArticulos = _context.Articulo.Include(articulo => articulo.Categoria).ToList();
+
+            foreach (var articulo in listaArticulos)
+            {
+                //Opción2: carga manual se generan muchas consultas SQL, no es muy eficiente
+                //si necesitamos cargar más propiedades
+                //articulo.Categoria = _context.Categoria.FirstOrDefault(categoria => categoria.Categoria_Id == articulo.Categoria_Id);
+
+                //Opción 3: (Explicit loading)
+                //Carga explicita
+                _context.Entry(articulo).Reference(categoria => categoria.Categoria).Load();
+            }
+
+
 
             return View(listaArticulos);
         }
@@ -121,3 +137,5 @@ namespace CursoEntityCore.Controllers
         }
     }
 }
+
+
