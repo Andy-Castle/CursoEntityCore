@@ -13,9 +13,11 @@ namespace CursoEntityCore.Models
         //[DisplayFormat(ConvertEmptyStringToNull = true, NullDisplayText = "[NULL]")]
         [Required]
         public string Nombre { get; set; }
-
+        
         [DataType(DataType.Date)]
         public DateTime FechaCreacion { get; set; }
+
+        public bool Activo { get; set; }
 
         public List<Articulo> Articulo { get; set; }
 

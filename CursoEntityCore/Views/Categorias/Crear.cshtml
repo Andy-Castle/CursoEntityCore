@@ -23,6 +23,24 @@
 
             <div class="row">
                 <div class="col-4">
+                    <label asp-for="Activo"></label>
+                </div>
+                <div class="col-8">
+                    <p>
+                        <input type="radio" asp-for="Activo" value="false" />
+                    Inactivo</p>
+                    <span asp-validation-for="Activo" class="text-danger"></span>
+
+                    <p>
+                        <input type="radio" asp-for="Activo" value="true" />
+                        Activo
+                    </p>
+                    <span asp-validation-for="Activo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4">
                     <label asp-for="FechaCreacion"></label>
                 </div>
                 <div class="col-8">
@@ -30,6 +48,7 @@
                     <span asp-validation-for="FechaCreacion" class="text-danger"></span>
                 </div>
             </div>
+       
 
         </div>
     </div>

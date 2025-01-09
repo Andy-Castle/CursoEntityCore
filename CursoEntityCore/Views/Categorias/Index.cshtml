@@ -35,13 +35,17 @@
         <table class="table table-striped border">
             <tr>
                 <th>Nombre de categoría</th>
+                <th>Estado</th>
+
                 <th>Fecha de Creación</th>
+
                 <th></th>
             </tr> 
             @foreach(var categoria in Model)
             {
                 <tr>
                     <td>@categoria.Nombre</td>
+                    <td>@categoria.Activo</td>
                     <td>@categoria.FechaCreacion</td>
 
                     <td>
