@@ -20,7 +20,7 @@ namespace CursoEntityCore.Controllers
 
             //Consulta filtrando por fecha
             DateTime fechaComparacion = new DateTime(2025, 01, 08);
-            List<Categoria> listaCategorias = _context.Categoria.Where(fecha => fecha.FechaCreacion >= fechaComparacion).ToList();
+            List<Categoria> listaCategorias = _context.Categoria.Where(fecha => fecha.FechaCreacion >= fechaComparacion).OrderByDescending(fecha => fecha.FechaCreacion).ToList();
 
             return View(listaCategorias);
         }
