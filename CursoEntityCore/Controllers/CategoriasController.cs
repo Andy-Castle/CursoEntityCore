@@ -1,6 +1,7 @@
 ﻿using CursoEntityCore.Datos;
 using CursoEntityCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CursoEntityCore.Controllers
@@ -35,7 +36,10 @@ namespace CursoEntityCore.Controllers
             //    .Select(categoria => new { categoria.Key, Count = categoria.Count() }).ToList();
 
             //Paginanción Registros: take y skip
-            List<Categoria> listaCategorias = _context.Categoria.Skip(3).Take(2).ToList();
+            //List<Categoria> listaCategorias = _context.Categoria.Skip(3).Take(2).ToList();
+
+            //Consultas SQL convencionales
+            List<Categoria> listaCategorias = _context.Categoria.FromSqlRaw("select * from Categoria where Nombre like 'Categoria%' and Activo = 1").ToList();
             return View(listaCategorias);
         }
 
