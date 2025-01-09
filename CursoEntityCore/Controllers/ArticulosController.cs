@@ -54,7 +54,61 @@ namespace CursoEntityCore.Controllers
                 
             }
 
-            return View();
+       
+            ArticuloCategoriaVM articuloCategorias = new ArticuloCategoriaVM();
+            articuloCategorias.ListaCategorias = _context.Categoria.Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            {
+                Text = i.Nombre,
+                Value = i.Categoria_Id.ToString()
+            });
+
+
+            return View(articuloCategorias);
+        }
+
+
+        [HttpGet]
+        public IActionResult Editar(int? id)
+        {
+            if (id == null)
+            {
+                return View();
+            }
+
+            //Aqui creamos la instancia
+            ArticuloCategoriaVM articuloCategorias = new ArticuloCategoriaVM();
+
+            //Aqui de articulosCategorias seleccionamos el Nombre de la cateogira y su Id lo pasamos a string
+            articuloCategorias.ListaCategorias = _context.Categoria.Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            {
+                Text = i.Nombre,
+                Value = i.Categoria_Id.ToString()
+            });
+
+            articuloCategorias.Articulo = _context.Articulo.FirstOrDefault(articulo => articulo.Articulo_Id == id);
+
+            if (articuloCategorias == null)
+            {
+                return NotFound();
+            }
+
+            return View(articuloCategorias);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Editar(ArticuloCategoriaVM articuloVM)
+        {
+            if (articuloVM.Articulo.Articulo_Id == 0)
+            {
+                return View(articuloVM.Articulo);
+            }
+            else 
+            {
+                _context.Articulo.Update(articuloVM.Articulo);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }
