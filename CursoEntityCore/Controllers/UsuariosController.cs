@@ -29,11 +29,11 @@ namespace CursoEntityCore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Crear(Categoria categoria)
+        public IActionResult Crear(Usuario usuario)
         {
             if (ModelState.IsValid)
             {
-                _context.Categoria.Add(categoria);
+                _context.Usuario.Add(usuario);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
