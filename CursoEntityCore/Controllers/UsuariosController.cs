@@ -71,8 +71,8 @@ namespace CursoEntityCore.Controllers
         [HttpGet]
         public IActionResult Borrar(int? id)
         {
-            var categoria = _context.Categoria.FirstOrDefault(categoria => categoria.Categoria_Id == id);
-            _context.Categoria.Remove(categoria);
+            var usuario = _context.Usuario.FirstOrDefault(usuario => usuario.Id == id);
+            _context.Usuario.Remove(usuario);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
