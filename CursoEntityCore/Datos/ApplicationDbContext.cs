@@ -30,6 +30,10 @@ namespace CursoEntityCore.Datos
 
         public DbSet<Etiqueta> Etiqueta { get; set; }
 
+        //Agregamos dbset para la tabla de relación ArticuloEtiqueta
+        public DbSet<ArticuloEtiqueta> ArticuloEtiqueta { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ArticuloEtiqueta>().HasKey(articuloEtiqueta => new { articuloEtiqueta.Etiqueta_Id, articuloEtiqueta.Articulo_Id});

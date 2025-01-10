@@ -38,6 +38,7 @@
                     <td>@articulo.Categoria.Nombre</td>
                     <td>
                         <a class="btn btn-primary text-white" asp-action="Editar" asp-route-id="@articulo.Articulo_Id">Editar</a>
+                        <a class="btn btn-success text-white" asp-action="AdministrarEtiquetas" asp-route-id="@articulo.Articulo_Id">Administrar Etiquetas</a>
                         <a class="btn btn-danger text-white" asp-action="Borrar" asp-route-id="@articulo.Articulo_Id">Borrar</a>
                     </td>
                 </tr>
