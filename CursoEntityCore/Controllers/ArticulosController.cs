@@ -72,7 +72,7 @@ namespace CursoEntityCore.Controllers
                 
             }
 
-       
+
             ArticuloCategoriaVM articuloCategorias = new ArticuloCategoriaVM();
             articuloCategorias.ListaCategorias = _context.Categoria.Select(i => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
             {
