@@ -260,12 +260,19 @@ namespace CursoEntityCore.Controllers
         }
 
 
-
-
-
-        //public void TestIQueryable()
-        //{
-
-        //}
+        public void TestIQueryable()
+        {
+            //1- Código con IQueryable
+            //IQueryable hereda de IEnumerable
+            //Todo lo que se puede hacer con IEnumerable se puede hacer con IQueryable
+            IQueryable<Categoria> listaCategorias = _context.Categoria;
+            var categoriasActivas = listaCategorias.Where(c => c.Activo == true).ToList();
+            //Consulta resultante
+            /*
+             * SELECT [c].[Categoria_Id], [c].[Activo], [c].[FechaCreacion], [c].[Nombre]
+               FROM [Categoria] AS [c]
+               WHERE [c].[Activo] = CAST(1 AS bit)
+             */
+        }
     }
 }
