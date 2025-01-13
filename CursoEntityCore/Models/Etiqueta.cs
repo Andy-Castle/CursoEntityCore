@@ -11,7 +11,7 @@ namespace CursoEntityCore.Models
         public DateTime Fecha { get; set; }
 
         //Para relacion muchos a muchos
-        public ICollection<ArticuloEtiqueta> articuloEtiqueta { get; set; }
+        public ICollection<ArticuloEtiqueta> ArticuloEtiqueta { get; set; }
 
     }
 }

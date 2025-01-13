@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CursoEntityCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250108151234_CreacionTablaEtiquetaBD")]
-    partial class CreacionTablaEtiquetaBD
+    [Migration("20250113192950_MigraciónInicialFluentAPI")]
+    partial class MigraciónInicialFluentAPI
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace CursoEntityCore.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("TituloArticulo")
                         .IsRequired()
@@ -57,7 +57,22 @@ namespace CursoEntityCore.Migrations
 
                     b.HasIndex("Categoria_Id");
 
-                    b.ToTable("Tbl_Articulo");
+                    b.ToTable("Tbl_Articulo", (string)null);
+                });
+
+            modelBuilder.Entity("CursoEntityCore.Models.ArticuloEtiqueta", b =>
+                {
+                    b.Property<int>("Etiqueta_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Articulo_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("Etiqueta_Id", "Articulo_Id");
+
+                    b.HasIndex("Articulo_Id");
+
+                    b.ToTable("ArticuloEtiqueta");
                 });
 
             modelBuilder.Entity("CursoEntityCore.Models.Categoria", b =>
@@ -67,6 +82,12 @@ namespace CursoEntityCore.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Categoria_Id"));
+
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("date");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -90,11 +111,9 @@ namespace CursoEntityCore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Deporte")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Mascota")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("DetalleUsuario_Id");
@@ -111,10 +130,9 @@ namespace CursoEntityCore.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Etiqueta_Id"));
 
                     b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Titulo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Etiqueta_Id");
@@ -130,25 +148,23 @@ namespace CursoEntityCore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DetalleUsuario_Id")
+                    b.Property<int?>("DetalleUsuario_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Direccion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NombreUsuario")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DetalleUsuario_Id")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[DetalleUsuario_Id] IS NOT NULL");
 
                     b.ToTable("Usuario");
                 });
@@ -164,15 +180,37 @@ namespace CursoEntityCore.Migrations
                     b.Navigation("Categoria");
                 });
 
+            modelBuilder.Entity("CursoEntityCore.Models.ArticuloEtiqueta", b =>
+                {
+                    b.HasOne("CursoEntityCore.Models.Articulo", "Articulo")
+                        .WithMany("ArticuloEtiqueta")
+                        .HasForeignKey("Articulo_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CursoEntityCore.Models.Etiqueta", "Etiqueta")
+                        .WithMany("ArticuloEtiqueta")
+                        .HasForeignKey("Etiqueta_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Articulo");
+
+                    b.Navigation("Etiqueta");
+                });
+
             modelBuilder.Entity("CursoEntityCore.Models.Usuario", b =>
                 {
                     b.HasOne("CursoEntityCore.Models.DetalleUsuario", "DetalleUsuario")
                         .WithOne("Usuario")
-                        .HasForeignKey("CursoEntityCore.Models.Usuario", "DetalleUsuario_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CursoEntityCore.Models.Usuario", "DetalleUsuario_Id");
 
                     b.Navigation("DetalleUsuario");
+                });
+
+            modelBuilder.Entity("CursoEntityCore.Models.Articulo", b =>
+                {
+                    b.Navigation("ArticuloEtiqueta");
                 });
 
             modelBuilder.Entity("CursoEntityCore.Models.Categoria", b =>
@@ -182,8 +220,12 @@ namespace CursoEntityCore.Migrations
 
             modelBuilder.Entity("CursoEntityCore.Models.DetalleUsuario", b =>
                 {
-                    b.Navigation("Usuario")
-                        .IsRequired();
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("CursoEntityCore.Models.Etiqueta", b =>
+                {
+                    b.Navigation("ArticuloEtiqueta");
                 });
 #pragma warning restore 612, 618
         }

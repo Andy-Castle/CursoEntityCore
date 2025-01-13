@@ -57,7 +57,6 @@ namespace CursoEntityCore.Datos
             modelBuilder.Entity<Articulo>().Property(article => article.Fecha).HasColumnType("date");
 
 
-            //Fluent API nombre de tabbla y nombre de columna
             modelBuilder.Entity<Articulo>().ToTable("Tbl_Articulo");
             modelBuilder.Entity<Articulo>().Property(article => article.TituloArticulo).HasColumnName("Titulo");
 
@@ -85,6 +84,12 @@ namespace CursoEntityCore.Datos
             //Fluent API: Relación Uno a Muchos Categoria-Articulos
             modelBuilder.Entity<Articulo>().HasOne(c => c.Categoria)
                 .WithMany(c => c.Articulo).HasForeignKey(c => c.Categoria_Id);
+
+            //Fluent API: Relación Muchos a Muchos Articulos-Etiquetas
+            modelBuilder.Entity<ArticuloEtiqueta>().HasKey(ae => new { ae.Etiqueta_Id, ae.Articulo_Id });
+            modelBuilder.Entity<ArticuloEtiqueta>().HasOne(a => a.Articulo).WithMany(a => a.ArticuloEtiqueta).HasForeignKey(a => a.Articulo_Id);
+            modelBuilder.Entity<ArticuloEtiqueta>().HasOne(a => a.Etiqueta).WithMany(a => a.ArticuloEtiqueta).HasForeignKey(a => a.Etiqueta_Id);
+
 
             base.OnModelCreating(modelBuilder);
         }
