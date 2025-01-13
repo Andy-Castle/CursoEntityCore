@@ -1,0 +1,53 @@
+﻿@model CursoEntityCore.ViewModels.ArticuloEtiquetaVM
+@{
+    ViewData["Title"] = "Administrar Etiquetas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<h3 class="text-center">Administrar etiquetas para el artículo</h3>
+<form method="post" asp-action="AdministrarEtiquetas">
+
+    <!--Importante para el método AdministrarEtiquetas-->
+    <input type="hidden" asp-for="Articulo.Articulo_Id" />
+    <input type="hidden" asp-for="ArticuloEtiqueta.Articulo_Id" />
+
+
+    <div class="row">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12 mt-4">
+            <div class="row">
+                <div class="col-4">
+                    <label asp-for="Articulo.TituloArticulo"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Articulo.TituloArticulo" class="form-control" />
+                    <span asp-validation-for="Articulo.TituloArticulo" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="row">
+                        <div class="col-4">
+                            <label for="etiquetas">Etiquetas</label>
+                        </div>
+                        <div class="col-8">
+                             @Html.DropDownListFor(u => u.ArticuloEtiqueta.Etiqueta_Id, Model.ListaEtiquetas, "--Seleccionar Etiquetas--",
+                             new {@class = "form-control"})
+                        </div>
+                    </div>
+
+
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-3">
+            <a asp-action="Index">Volver a lista</a>
+        </div>
+        <div class="col-5 offset-4">
+            <button type="submit" class="btn btn-primary form-control">Asociar Etiquetas a Artículo</button>
+            &nbsp;
+        </div>
+    </div>
+</form>

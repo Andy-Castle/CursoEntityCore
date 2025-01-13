@@ -2,6 +2,7 @@
 using CursoEntityCore.Models;
 using CursoEntityCore.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace CursoEntityCore.Controllers
@@ -136,6 +137,46 @@ namespace CursoEntityCore.Controllers
             _context.Articulo.Remove(articulo);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult AdministrarEtiquetas(int id)
+        {
+            // Se crea un objeto del ViewModel ArticuloEtiquetaVM para manejar datos relacionados con el artículo y sus etiquetas.
+            ArticuloEtiquetaVM articuloEtiquetas = new ArticuloEtiquetaVM
+            {
+                // Lista de ArticuloEtiqueta (relaciones entre artículos y etiquetas) asociadas al artículo con el ID proporcionado.
+                // Incluye información detallada de las etiquetas relacionadas.
+                // Incluye información detallada de los artículos relacionados.
+                // Filtra solo las relaciones del artículo con el ID especificado.
+                ListaArticuloEtiquetas = _context.ArticuloEtiqueta.Include(etiqueta => etiqueta.Etiqueta).Include(articulo => articulo.Articulo)
+                .Where(a => a.Articulo_Id == id),
+
+                // Inicializa un nuevo objeto ArticuloEtiqueta para capturar futuras relaciones entre el artículo y etiquetas.
+                ArticuloEtiqueta = new ArticuloEtiqueta()
+                {
+                    Articulo_Id = id
+                },
+                // Obtiene los detalles del artículo específico usando el ID.
+                Articulo = _context.Articulo.FirstOrDefault(a => a.Articulo_Id == id)
+            };
+
+            // Obtiene una lista de IDs de etiquetas ya asociadas al artículo.
+            List<int> listaTemporalEtiquetasArticulo = articuloEtiquetas.ListaArticuloEtiquetas.Select(e => e.Etiqueta_Id).ToList();
+
+            //Obtener todas las etiquetas cuyos id's no esten en la listaTemporalEtiquetasArticulo
+            //Crear un NOT In usando LINQ
+            var listaTemporal = _context.Etiqueta.Where(e => !listaTemporalEtiquetasArticulo.Contains(e.Etiqueta_Id)).ToList();
+
+            //Crear lista de etiquetas para el dropdown
+            articuloEtiquetas.ListaEtiquetas = listaTemporal.Select(i => new SelectListItem 
+            {
+                Text = i.Titulo,
+                Value = i.Etiqueta_Id.ToString()
+            
+            });
+
+            return View(articuloEtiquetas);
         }
     }
 }
