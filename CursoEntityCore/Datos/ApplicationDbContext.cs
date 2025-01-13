@@ -36,18 +36,51 @@ namespace CursoEntityCore.Datos
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ArticuloEtiqueta>().HasKey(articuloEtiqueta => new { articuloEtiqueta.Etiqueta_Id, articuloEtiqueta.Articulo_Id});
+            //modelBuilder.Entity<ArticuloEtiqueta>().HasKey(articuloEtiqueta => new { articuloEtiqueta.Etiqueta_Id, articuloEtiqueta.Articulo_Id});
 
             //Siembra de datos se hace aqui
-            var categoria5 = new Categoria() { Categoria_Id = 33, Nombre = "Categoria 5", FechaCreacion = new DateTime(2024, 11, 28), Activo = true };
-            var categoria6 = new Categoria() { Categoria_Id = 34, Nombre = "Categoria 6", FechaCreacion = new DateTime(2024, 12, 29), Activo = false };
+            //var categoria5 = new Categoria() { Categoria_Id = 33, Nombre = "Categoria 5", FechaCreacion = new DateTime(2024, 11, 28), Activo = true };
+            //var categoria6 = new Categoria() { Categoria_Id = 34, Nombre = "Categoria 6", FechaCreacion = new DateTime(2024, 12, 29), Activo = false };
 
-            modelBuilder.Entity<Categoria>().HasData(new Categoria[] {  categoria6});
+            //modelBuilder.Entity<Categoria>().HasData(new Categoria[] {  categoria6});
+
+            //Fluent API para Categoria
+            modelBuilder.Entity<Categoria>().HasKey(category => category.Categoria_Id); //Indicamos que es una llave primaria
+            modelBuilder.Entity<Categoria>().Property(category => category.Nombre).IsRequired(); //Indicamos que la propiedad nombre es requerido
+            modelBuilder.Entity<Categoria>().Property(category => category.FechaCreacion).HasColumnType("date"); // Indicamos que la la FechaCreacion es de tipo date
+
+
+            //Fluent API para Articulo
+            modelBuilder.Entity<Articulo>().HasKey(article => article.Articulo_Id);
+            modelBuilder.Entity<Articulo>().Property(article => article.TituloArticulo).IsRequired().HasMaxLength(20);
+            modelBuilder.Entity<Articulo>().Property(article => article.Descripcion).IsRequired().HasMaxLength(500);
+            modelBuilder.Entity<Articulo>().Property(article => article.Fecha).HasColumnType("date");
+
+
+            //Fluent API nombre de tabbla y nombre de columna
+            modelBuilder.Entity<Articulo>().ToTable("Tbl_Articulo");
+            modelBuilder.Entity<Articulo>().Property(article => article.TituloArticulo).HasColumnName("Titulo");
+
+
+
+            //Fluent API para Usuario
+            modelBuilder.Entity<Usuario>().HasKey(user => user.Id);
+            modelBuilder.Entity<Usuario>().Ignore(user => user.Edad);// el no mapeado 
+
+
+            //Fluent API para DetalleUsuario
+            modelBuilder.Entity<DetalleUsuario>().HasKey(detailsUser => detailsUser.DetalleUsuario_Id);
+            modelBuilder.Entity<DetalleUsuario>().Property(detailsUser => detailsUser.Cedula).IsRequired();
+
+
+            //Fluent API para Etiqueta
+            modelBuilder.Entity<Etiqueta>().HasKey(tag => tag.Etiqueta_Id);
+            modelBuilder.Entity<Etiqueta>().Property(tag => tag.Fecha).HasColumnType("date");
+
+
 
             base.OnModelCreating(modelBuilder);
         }
-
-
 
     }
 }
