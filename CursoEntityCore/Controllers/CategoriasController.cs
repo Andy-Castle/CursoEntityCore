@@ -241,5 +241,31 @@ namespace CursoEntityCore.Controllers
              * inmediatamente(2 y 3). Esto es util cuando se necesita trabajar con los datos cargados en memoria
              */
         }
+
+        public void TestIEnumerable()
+        {
+            //1- Código con IEnumerable
+            //IEnumerable<Categoria> - se utiliza para representar una colección de objetos
+
+            IEnumerable<Categoria> listaCategorias = _context.Categoria;
+            var categoriasActivas = listaCategorias.Where(c => c.Activo == true).ToList();
+          
+
+            //2-Consulta resultante
+            /*
+             * SELECT [c].[Categoria_Id], [c].[Activo], [c].[FechaCreacion], [c].[Nombre]
+             * FROM [Categoria] AS[c]
+             */
+            //El filtro del where se aplica en memoria
+        }
+
+
+
+
+
+        //public void TestIQueryable()
+        //{
+
+        //}
     }
 }
