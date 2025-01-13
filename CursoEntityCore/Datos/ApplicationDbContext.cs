@@ -43,7 +43,7 @@ namespace CursoEntityCore.Datos
             //var categoria6 = new Categoria() { Categoria_Id = 34, Nombre = "Categoria 6", FechaCreacion = new DateTime(2024, 12, 29), Activo = false };
 
             //modelBuilder.Entity<Categoria>().HasData(new Categoria[] {  categoria6});
-
+             
             //Fluent API para Categoria
             modelBuilder.Entity<Categoria>().HasKey(category => category.Categoria_Id); //Indicamos que es una llave primaria
             modelBuilder.Entity<Categoria>().Property(category => category.Nombre).IsRequired(); //Indicamos que la propiedad nombre es requerido
@@ -77,7 +77,10 @@ namespace CursoEntityCore.Datos
             modelBuilder.Entity<Etiqueta>().HasKey(tag => tag.Etiqueta_Id);
             modelBuilder.Entity<Etiqueta>().Property(tag => tag.Fecha).HasColumnType("date");
 
-
+            //Fluent API Relación Uno a Uno Usuario-DetalleUusario 
+            //Usuario es la entidad padre
+            modelBuilder.Entity<Usuario>().HasOne(u => u.DetalleUsuario)
+                .WithOne(u => u.Usuario).HasForeignKey<Usuario>("DetalleUsuario_Id");
 
             base.OnModelCreating(modelBuilder);
         }
