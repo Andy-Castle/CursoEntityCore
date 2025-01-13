@@ -274,5 +274,18 @@ namespace CursoEntityCore.Controllers
                WHERE [c].[Activo] = CAST(1 AS bit)
              */
         }
+        
+        [HttpGet]
+        public IActionResult CategoriasActivas()
+        {  
+            IQueryable<Categoria> listaCategoriasActivas = _context.Categoria;
+            var categoriasActivas = listaCategoriasActivas.Where(c => c.Activo == true).ToList();
+
+            return View("Index", categoriasActivas);
+
+
+        }
+   
+       
     }
 }
