@@ -178,6 +178,24 @@ namespace CursoEntityCore.Controllers
 
             return View(articuloEtiquetas);
         }
+
+
+        [HttpPost]
+        public IActionResult AdministrarEtiquetas (ArticuloEtiquetaVM articuloEtiquetas)
+        {
+            // Verifica que los IDs del artículo y la etiqueta no sean cero (asegurándose de que haya datos válidos).
+            if (articuloEtiquetas.ArticuloEtiqueta.Articulo_Id != 0 && articuloEtiquetas.ArticuloEtiqueta.Etiqueta_Id != 0)
+            {
+                // Agrega una nueva relación entre el artículo y la etiqueta en la base de datos.
+                _context.ArticuloEtiqueta.Add(articuloEtiquetas.ArticuloEtiqueta);
+                _context.SaveChanges();
+
+            }
+
+            // Redirige al método AdministrarEtiquetas para actualizar la vista con las relaciones actualizadas.
+            // Pasa como parámetro el ID del artículo actual para recargar sus datos.
+            return RedirectToAction(nameof(AdministrarEtiquetas), new {@id = articuloEtiquetas.ArticuloEtiqueta.Articulo_Id});
+        }
     }
 }
 
