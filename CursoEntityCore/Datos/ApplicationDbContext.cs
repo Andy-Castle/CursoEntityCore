@@ -77,10 +77,14 @@ namespace CursoEntityCore.Datos
             modelBuilder.Entity<Etiqueta>().HasKey(tag => tag.Etiqueta_Id);
             modelBuilder.Entity<Etiqueta>().Property(tag => tag.Fecha).HasColumnType("date");
 
-            //Fluent API Relación Uno a Uno Usuario-DetalleUusario 
+            //Fluent API: Relación Uno a Uno Usuario-DetalleUusario 
             //Usuario es la entidad padre
             modelBuilder.Entity<Usuario>().HasOne(u => u.DetalleUsuario)
                 .WithOne(u => u.Usuario).HasForeignKey<Usuario>("DetalleUsuario_Id");
+
+            //Fluent API: Relación Uno a Muchos Categoria-Articulos
+            modelBuilder.Entity<Articulo>().HasOne(c => c.Categoria)
+                .WithMany(c => c.Articulo).HasForeignKey(c => c.Categoria_Id);
 
             base.OnModelCreating(modelBuilder);
         }
