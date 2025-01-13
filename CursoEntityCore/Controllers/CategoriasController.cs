@@ -42,9 +42,10 @@ namespace CursoEntityCore.Controllers
             //List<Categoria> listaCategorias = _context.Categoria.FromSqlRaw("select * from Categoria where Nombre like 'Categoria%' and Activo = 1").ToList();
 
             //Interpolacion de string (string interpolation), para proteger nuestra aplicación
-            int id = 31;
-            var categoria = _context.Categoria.FromSqlRaw($"select * from Categoria where Categoria_Id = {id}");
-            return View(categoria);
+            //int id = 31;
+            //var categoria = _context.Categoria.FromSqlRaw($"select * from Categoria where Categoria_Id = {id}");
+            List<Categoria> listaCategorias = _context.Categoria.ToList();
+            return View(listaCategorias);
         }
 
         [HttpGet]
