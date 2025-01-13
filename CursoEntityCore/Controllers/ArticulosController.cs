@@ -196,7 +196,27 @@ namespace CursoEntityCore.Controllers
             // Pasa como parámetro el ID del artículo actual para recargar sus datos.
             return RedirectToAction(nameof(AdministrarEtiquetas), new {@id = articuloEtiquetas.ArticuloEtiqueta.Articulo_Id});
         }
+
+
+        [HttpPost]
+        public IActionResult EliminarEtiquetas(int idEtiqueta,ArticuloEtiquetaVM articuloEtiquetas)
+        {
+            // Obtiene el ID del artículo desde el modelo recibido.
+            int idArticulo = articuloEtiquetas.Articulo.Articulo_Id;
+            // Busca en la base de datos la relación(ArticuloEtiqueta) que coincide con el ID de la etiqueta y el ID del artículo.
+                ArticuloEtiqueta articuloEtiqueta = _context.ArticuloEtiqueta.FirstOrDefault(
+                u=>u.Etiqueta_Id == idEtiqueta && u.Articulo_Id == idArticulo);
+
+                _context.ArticuloEtiqueta.Remove(articuloEtiqueta);
+                _context.SaveChanges();
+
+            // Redirige al método AdministrarEtiquetas para actualizar la vista con las relaciones restantes.
+            // Pasa como parámetro el ID del artículo actual para recargar sus datos.
+            return RedirectToAction(nameof(AdministrarEtiquetas), new { @id = idArticulo });
+        }
+
     }
 }
+
 
 
