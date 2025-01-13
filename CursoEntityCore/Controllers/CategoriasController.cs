@@ -178,5 +178,68 @@ namespace CursoEntityCore.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+
+        //Ejecución diferida
+        /* Las consultas de EF Core no se ejecutan cuando son creadas. Se 
+         * ejecutan segun los siguientes escenarios
+         * Más información: https://learn.microsoft.com/es-es/dotnet/standard/linq/deferred-execution-lazy-evaluation
+         */
+        [HttpGet]
+        public void EjecucionDiferida()
+        {
+            //1-Cuando se hace una iteración sobre ellos Ejemplo:
+            //1 - Iteración diferida:
+            var categorias = _context.Categoria; // Aquí se define la consulta, pero no se ejecuta todavía.
+
+            foreach (var categoria in categorias)  // La ejecución de la consulta ocurre en este punto.
+            {
+                var nombreCat = "";
+                nombreCat = categoria.Nombre; // Accede al nombre de cada categoría.
+            }
+
+            /*
+             * Cuando se define var categorias = _context.Categoria, no se ejecuta la consulta inmediatamente.
+                La ejecución ocurre cuando se inicia el foreach, ya que es aquí donde se necesitan los datos.
+
+                Es eficiente porque se ejecuta solo cuando los datos se requieren.
+             */
+
+            //2-Cuando se llama a cualquiera de los métodos: To Dictionary, ToList, ToArray
+            //Forzar ejecución con ToList()
+            var categorias2 = _context.Categoria.ToList();// Se ejecuta la consulta aquí y se cargan los datos en memoria.
+
+            foreach (var categoria in categorias2) // Se itera sobre los datos ya cargados.
+            {
+                var nombreCat = "";
+                nombreCat = categoria.Nombre; // Accede al nombre de cada categoría.
+            }
+
+            /*
+             * Cuando se llama a ToList(), la consulta se ejecuta inmediatamente y los datos se cargan en memoria.
+                Al iterar sobre categorias2, ya no se consulta la base de datos porque los datos están disponibles localmente.
+
+                La diferencia con el caso de arriba, es que los datos se obtienen de la base de datos durante la iteración.
+                Aquí, todos los datos se cargan antes de iterar.
+             
+             */
+
+
+            //3-Cuando se llama cualquier método que retorna un solo objeto:
+            //First, Single, Count , Max, etc.
+            //Métodos que devuelven un solo objeto
+            var categorias3 = _context.Categoria; // Consulta diferida (no ejecutada aún).
+
+            var totalCategorias2 = _context.Categoria.Count(); // Ejecuta la consulta para contar las categorías.
+
+            var test = "";
+
+            //Nota: Métodos como First(), Single(), Max() o Count() fuerzan la ejecución porque necesitan un resultado específico.
+
+            /*La iteración diferida es util(1) para manejar grandes conjuntos de datos
+             * sin cargar todo en memoria.
+             * Y la ejecución inmediata: Métodos como ToList() o Count() fuerzan la ejecución
+             * inmediatamente(2 y 3). Esto es util cuando se necesita trabajar con los datos cargados en memoria
+             */
+        }
     }
 }
