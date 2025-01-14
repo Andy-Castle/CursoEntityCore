@@ -282,10 +282,29 @@ namespace CursoEntityCore.Controllers
             var categoriasActivas = listaCategoriasActivas.Where(c => c.Activo == true).ToList();
 
             return View("Index", categoriasActivas);
-
-
         }
-   
-       
+
+        public void TestUpdate()
+        {
+            //Código 
+            // Obtiene el usuario con ID 2, incluyendo su relación con 'DetalleUsuario'
+            var datoUsuario = _context.Usuario.Include(u => u.DetalleUsuario).FirstOrDefault(d => d.Id == 2); // Carga los detalles relacionados y encuentra el primer usuario cuyo Id sea 2
+            // Cambia el valor de la propiedad 'Deporte' en 'DetalleUsuario' asociado al usuario encontrado
+            datoUsuario.DetalleUsuario.Deporte = "Natación";
+            _context.Update(datoUsuario);
+            _context.SaveChanges();
+        }
+
+        //public void TestAttach()
+        //{
+        //    //Código 
+        //    var datoUsuario = _context.Usuario.Include(u => u.DetalleUsuario).FirstOrDefault(d => d.Id == 2);
+        //    datoUsuario.DetalleUsuario.Deporte = "Ciclismo";
+        //    _context.Attach(datoUsuario);
+        //    _context.SaveChanges();
+        //}
+
+
+
     }
 }
