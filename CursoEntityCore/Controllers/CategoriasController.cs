@@ -313,7 +313,18 @@ namespace CursoEntityCore.Controllers
             var usarVista3 = _context.CategoriaDesdeVistas.Where(c => c.Activo == true);
         }
 
+        //Consultas FromSQL
+        public void ConsultasFromSql()
+        {   
+            //Consulta directa menos segura, se podria usar pero habria que usar bien los parametros
+            var usuario = _context.Usuario.FromSqlRaw("select * from dbo.Usuario").ToList();
 
+            //Consulta con parámetros para evitar inyección sql
+            var idUsuario = 1;
+            //Es mas seguro usar FromSqlInterpolated
+            var usuario2 = _context.Usuario.FromSqlInterpolated($"select * from dbo.Usuario where Id = {idUsuario}").ToList();
 
+        }
+        
     }
 }
