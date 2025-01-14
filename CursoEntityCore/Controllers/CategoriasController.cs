@@ -324,7 +324,11 @@ namespace CursoEntityCore.Controllers
             //Es mas seguro usar FromSqlInterpolated
             var usuario2 = _context.Usuario.FromSqlInterpolated($"select * from dbo.Usuario where Id = {idUsuario}").ToList();
 
+            
+            //Como ejecutar un procedimiento almancenado
+            var usuarioPorProcedimiento = _context.Usuario.FromSqlInterpolated($"EXEC dbo.SpObtenerUsuarioId {idUsuario}").ToList();
+
         }
-        
+
     }
 }
