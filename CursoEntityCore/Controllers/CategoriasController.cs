@@ -295,14 +295,15 @@ namespace CursoEntityCore.Controllers
             _context.SaveChanges();
         }
 
-        //public void TestAttach()
-        //{
-        //    //Código 
-        //    var datoUsuario = _context.Usuario.Include(u => u.DetalleUsuario).FirstOrDefault(d => d.Id == 2);
-        //    datoUsuario.DetalleUsuario.Deporte = "Ciclismo";
-        //    _context.Attach(datoUsuario);
-        //    _context.SaveChanges();
-        //}
+        public void TestAttach()
+        {
+            //Código 
+            var datoUsuario = _context.Usuario.Include(u => u.DetalleUsuario).FirstOrDefault(d => d.Id == 2);
+            //Solo actualiza la columna Deporte con el Id del usuario igual a 2
+            datoUsuario.DetalleUsuario.Deporte = "Ciclismo";
+            _context.Attach(datoUsuario);
+            _context.SaveChanges();
+        }
 
 
 
