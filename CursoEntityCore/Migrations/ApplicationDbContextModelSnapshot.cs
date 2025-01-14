@@ -69,7 +69,7 @@ namespace CursoEntityCore.Migrations
 
                     b.HasIndex("Articulo_Id");
 
-                    b.ToTable("ArticuloEtiqueta");
+                    b.ToTable("ArticuloEtiqueta", (string)null);
                 });
 
             modelBuilder.Entity("CursoEntityCore.Models.Categoria", b =>
@@ -92,7 +92,7 @@ namespace CursoEntityCore.Migrations
 
                     b.HasKey("Categoria_Id");
 
-                    b.ToTable("Categoria");
+                    b.ToTable("Categoria", (string)null);
                 });
 
             modelBuilder.Entity("CursoEntityCore.Models.DetalleUsuario", b =>
@@ -115,7 +115,7 @@ namespace CursoEntityCore.Migrations
 
                     b.HasKey("DetalleUsuario_Id");
 
-                    b.ToTable("DetalleUsuario");
+                    b.ToTable("DetalleUsuario", (string)null);
                 });
 
             modelBuilder.Entity("CursoEntityCore.Models.Etiqueta", b =>
@@ -134,7 +134,7 @@ namespace CursoEntityCore.Migrations
 
                     b.HasKey("Etiqueta_Id");
 
-                    b.ToTable("Etiqueta");
+                    b.ToTable("Etiqueta", (string)null);
                 });
 
             modelBuilder.Entity("CursoEntityCore.Models.Usuario", b =>
@@ -163,7 +163,7 @@ namespace CursoEntityCore.Migrations
                         .IsUnique()
                         .HasFilter("[DetalleUsuario_Id] IS NOT NULL");
 
-                    b.ToTable("Usuario");
+                    b.ToTable("Usuario", (string)null);
                 });
 
             modelBuilder.Entity("CursoEntityCore.Models.Articulo", b =>
